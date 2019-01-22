@@ -1,0 +1,53 @@
+1.git安装
+sudo apt-get install git
+
+2.git 配置如下：
+zhaoxiao@zhaoxiao:~$git config --global user.name "zhaoxiao"
+zhaoxiao@zhaoxiao:~$ git config --global user.email "xiao.870912@163.com"
+zhaoxiao@zhaoxiao:~$ git config --list
+user.name=zhaoxiao
+user.email=xiao.870912@163.com
+
+查看生成的配置文件：
+zhaoxiao@zhaoxiao:~$ vim ~/.gitconfig 
+
+
+3.创建并添加ssh公钥
+1).安装ssh
+sudo apt-get update
+sudo apt-get install openssh-server
+sudo ps -e |grep ssh //查看ssh是否启动
+2).生成SSH密钥过程
+1>.查看是否已经有了ssh密钥：cd ~/.ssh
+如果没有密钥则不会有此文件夹，有则备份删除
+2>.生存密钥：
+ssh-keygen -t rsa -C“xiao.870912@163.com”
+按3个回车，密码为空。
+最后生成两个文件：
+zhaoxiao@zhaoxiao:~/.ssh$ ls
+id_rsa  id_rsa.pub
+
+3).向github添加id_rsa.pub”的公钥.
+
+4).测试：
+ssh -T git@github.com
+成功结果为：
+Hi longzhimeng! You've successfully authenticated, but GitHub does not provide shell access.
+
+4.使用git上传文件到github
+1>.首先在github创建repository Orange.
+2>.在ubuntu使用git提交文件：
+zhaoxiao@zhaoxiao:~/Documents/work/code/orange$ git init 
+zhaoxiao@zhaoxiao:~/Documents/work/code/orange$ git add code 
+zhaoxiao@zhaoxiao:~/Documents/work/code/orange$
+git commit -m "First Commit"
+zhaoxiao@zhaoxiao:~/Documents/work/code/orange$
+git remote add origin git@github.com:longzhimeng/Orange.git(查找创建的repository)
+zhaoxiao@zhaoxiao:~/Documents/work/code/orange$
+git push -u origin master
+
+3>.如果想删除文件，命令如下：
+rm -rf dir
+git add -A
+git commit -m 'remove dir'
+git push -u origin master
